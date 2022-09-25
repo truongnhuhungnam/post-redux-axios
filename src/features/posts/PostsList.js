@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PostItem from "./PostItem";
-import { getPosts, postsSelector, addPosts } from "../posts/postsSlide";
+import { getPosts, selectAllPosts, addPosts } from "../posts/postsSlide";
 
 const Posts = () => {
     const dispatch = useDispatch();
-    const { loading, error, posts } = useSelector(postsSelector);
+    const { loading, error, posts } = useSelector(selectAllPosts);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
@@ -48,13 +48,13 @@ const Posts = () => {
     };
 
     return (
-        <div className="flex">
-            <div className="w-2/3 mx-auto px-4">
-                <h1 className="text-center text-[32px] font-bold">
+        <section className="flex">
+            <main className="w-2/3 mx-auto px-4">
+                <h2 className="text-center text-[32px] font-bold">
                     Post crud with axios
-                </h1>
+                </h2>
                 <div className="mt-8 w-2/3 mx-auto">{renderPosts()}</div>
-            </div>
+            </main>
             <div className="w-1/3 h-screen border-l border-black px-4">
                 <label className="block">
                     <span className="text-gray-700">Title</span>
@@ -81,7 +81,7 @@ const Posts = () => {
                     Add Post
                 </button>
             </div>
-        </div>
+        </section>
     );
 };
 export default Posts;
