@@ -49,7 +49,7 @@ export default postsSlide.reducer;
 export function fetchPosts() {
     return async (dispatch) => {
         postsApi
-            .get("/posts")
+            .get("/posts?_start=0&_limit=5")
             .then((response) => {
                 dispatch(setPosts(response.data));
             })
