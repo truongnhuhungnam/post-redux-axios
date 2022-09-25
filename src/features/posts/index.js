@@ -8,15 +8,20 @@ const Posts = () => {
     return (
         <div className="flex">
             <div className="w-2/3 mx-auto px-4">
-                {posts.map((post) => (
-                    <PostItem
-                        key={post.id}
-                        id={post.id}
-                        title={post.title}
-                        body={post.body}
-                        userId={post.userId}
-                    />
-                ))}
+                <h1 className="text-center text-[32px] font-bold">
+                    Post crud with axios
+                </h1>
+                <div className="mt-8">
+                    {posts.map((post) => (
+                        <PostItem
+                            key={post.id}
+                            id={post.id}
+                            title={post.title}
+                            body={post.body}
+                            userId={post.userId}
+                        />
+                    ))}
+                </div>
             </div>
             <div className="w-1/3 h-screen px-4">
                 <label className="block">
