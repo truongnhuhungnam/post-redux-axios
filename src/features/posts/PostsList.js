@@ -13,7 +13,7 @@ const Posts = () => {
         dispatch(getPosts());
     }, [dispatch]);
 
-    const renderItems = () => {
+    const renderPosts = () => {
         if (loading) return <strong>Loading please wait...</strong>;
 
         if (error) return <strong>Items not available at this time</strong>;
@@ -53,7 +53,7 @@ const Posts = () => {
                 <h1 className="text-center text-[32px] font-bold">
                     Post crud with axios
                 </h1>
-                <div className="mt-8 w-2/3 mx-auto">{renderItems()}</div>
+                <div className="mt-8 w-2/3 mx-auto">{renderPosts()}</div>
             </div>
             <div className="w-1/3 h-screen border-l border-black px-4">
                 <label className="block">
