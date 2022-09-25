@@ -46,7 +46,7 @@ export const postsSelector = (state) => state.posts;
 
 export default postsSlide.reducer;
 
-export function fetchPosts() {
+export function getPosts() {
     return async (dispatch) => {
         postsApi
             .get("/posts?_start=0&_limit=5")

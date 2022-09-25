@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PostItem from "./PostItem";
-import { fetchPosts, postsSelector, addPosts } from "../posts/postsSlide";
+import { getPosts, postsSelector, addPosts } from "../posts/postsSlide";
 
 const Posts = () => {
     const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const Posts = () => {
     const [body, setBody] = useState("");
 
     useEffect(() => {
-        dispatch(fetchPosts());
+        dispatch(getPosts());
     }, [dispatch]);
 
     const renderItems = () => {
