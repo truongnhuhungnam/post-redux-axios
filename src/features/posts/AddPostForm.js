@@ -25,10 +25,10 @@ const AddPostForm = () => {
             dispatch(addPosts(title, body, userId));
             setTitle("");
             setBody("");
-        } else {
-            alert("Please fill the inputs...");
         }
     };
+
+    const canSave = Boolean(title) && Boolean(body) && Boolean(userId);
 
     const renderUsersOptions = () => {
         if (loading) return <strong>Loading please wait...</strong>;
@@ -54,6 +54,17 @@ const AddPostForm = () => {
                 />
             </label>
             <label className="block">
+                <span className="text-gray-700">Author</span>
+                <select
+                    value={userId}
+                    onChange={onAuthorChange}
+                    className="input-primary"
+                >
+                    <option value=""></option>
+                    {renderUsersOptions()}
+                </select>
+            </label>
+            <label className="block">
                 <span className="text-gray-700">Content</span>
                 <textarea
                     value={body}
@@ -62,17 +73,12 @@ const AddPostForm = () => {
                     rows="2"
                 ></textarea>
             </label>
-            <label className="block">
-                <span className="text-gray-700">What type of event is it?</span>
-                <select
-                    value={userId}
-                    onChange={onAuthorChange}
-                    className="input-primary"
-                >
-                    {renderUsersOptions()}
-                </select>
-            </label>
-            <button onClick={onAddPostClick} className="btn-primary w-1/3 mt-4">
+
+            <button
+                onClick={onAddPostClick}
+                disabled={!canSave}
+                className="btn-primary w-1/3 mt-4"
+            >
                 Add Post
             </button>
         </>
