@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { postsApi } from "../../api/index";
 
 const initialState = {
@@ -22,10 +22,25 @@ const postsSlide = createSlice({
         setError: (state) => {
             state.error = true;
         },
+        addPosts: {
+            reducer(state, action) {
+                state.posts.push(action.payload);
+            },
+            prepare(title, body) {
+                return {
+                    payload: {
+                        userId: nanoid(),
+                        id: nanoid(),
+                        title,
+                        body,
+                    },
+                };
+            },
+        },
     },
 });
 
-export const { setLoading, setPosts, setError } = postsSlide.actions;
+export const { setLoading, setPosts, setError, addPosts } = postsSlide.actions;
 
 export const postsSelector = (state) => state.posts;
 
