@@ -1,9 +1,31 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PostItem from "./PostItem";
-import { getAllPosts } from "./postsSlide";
+import { fetchPosts, postsSelector } from "../posts/postsSlide";
 
 const Posts = () => {
-    const posts = useSelector(getAllPosts);
+    const dispatch = useDispatch();
+    const { loading, error, posts } = useSelector(postsSelector);
+
+    useEffect(() => {
+        dispatch(fetchPosts());
+    }, [dispatch]);
+
+    const renderItems = () => {
+        if (loading) return <strong>Loading please wait...</strong>;
+
+        if (error) return <strong>Items not available at this time</strong>;
+
+        return posts.map((post) => (
+            <PostItem
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                body={post.body}
+                userId={post.userId}
+            />
+        ));
+    };
 
     return (
         <div className="flex">
@@ -11,19 +33,9 @@ const Posts = () => {
                 <h1 className="text-center text-[32px] font-bold">
                     Post crud with axios
                 </h1>
-                <div className="mt-8">
-                    {posts.map((post) => (
-                        <PostItem
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            body={post.body}
-                            userId={post.userId}
-                        />
-                    ))}
-                </div>
+                <div className="mt-8 w-2/3 mx-auto">{renderItems()}</div>
             </div>
-            <div className="w-1/3 h-screen px-4">
+            <div className="w-1/3 h-screen border-l border-black px-4">
                 <label className="block">
                     <span className="text-gray-700">Full name</span>
                     <input type="text" className="input-primary" />
