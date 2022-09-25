@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { postsApi } from "../../api/index";
+import { api } from "../../api";
 
 const initialState = {
     loading: false,
@@ -26,10 +26,10 @@ const postsSlide = createSlice({
             reducer(state, action) {
                 state.posts.push(action.payload);
             },
-            prepare(title, body) {
+            prepare(title, body, userId) {
                 return {
                     payload: {
-                        userId: nanoid(),
+                        userId,
                         id: nanoid(),
                         title,
                         body,
@@ -48,7 +48,7 @@ export default postsSlide.reducer;
 
 export function getPosts() {
     return async (dispatch) => {
-        postsApi
+        api
             .get("/posts?_start=0&_limit=5")
             .then((response) => {
                 dispatch(setPosts(response.data));
