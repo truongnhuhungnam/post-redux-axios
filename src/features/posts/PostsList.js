@@ -2,7 +2,7 @@ import PostItem from "./PostItem";
 import AddPostForm from "./AddPostForm";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts, selectAllPosts } from "./postsSlide";
+import { getPosts, deletePost, selectAllPosts } from "./postsSlide";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,10 @@ const Posts = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+  const onDeletePost = (id) => {
+    dispatch(deletePost(id));
+  };
 
   const renderPosts = () => {
     if (loading) return <strong>Loading please wait...</strong>;
@@ -24,6 +28,7 @@ const Posts = () => {
         title={post.title}
         body={post.body}
         userId={post.userId}
+        onDeletePost={onDeletePost}
       />
     ));
   };

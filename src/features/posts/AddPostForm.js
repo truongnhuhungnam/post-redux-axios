@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postPosts } from "./postsSlide";
+import { postPost } from "./postsSlide";
 import { useEffect } from "react";
 import { getUsers, selectAllUsers } from "../users/usersSlice";
 
@@ -22,7 +22,7 @@ const AddPostForm = () => {
 
   const onAddPostClick = () => {
     if (title && body) {
-      dispatch(postPosts(title, body, userId));
+      dispatch(postPost(title, body, userId));
       setTitle("");
       setBody("");
     }
