@@ -35,13 +35,13 @@ const Posts = () => {
 
   return (
     <section className="flex">
-      <main className="w-2/3 mx-auto px-4">
+      <main className="w-2/3 mx-auto px-4 border-r border-black">
         <h2 className="text-center text-[32px] font-bold">
           Post crud with axios
         </h2>
         <div className="mt-8 w-2/3 mx-auto">{renderPosts()}</div>
       </main>
-      <div className="w-1/3 h-screen border-l border-black px-4">
+      <div className="w-1/3 h-screen px-4">
         <AddPostForm />
       </div>
     </section>
