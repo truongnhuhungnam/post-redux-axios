@@ -25,7 +25,7 @@ const postsSlide = createSlice({
     addPost: (state, action) => {
       state.loading = false;
       state.error = false;
-      state.posts.unshift(action.payload);
+      state.posts.push(action.payload);
     },
   },
 });
