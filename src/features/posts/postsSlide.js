@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { api } from "../../api";
+import { api } from "../../api/posts";
 
 const initialState = {
     loading: false,
