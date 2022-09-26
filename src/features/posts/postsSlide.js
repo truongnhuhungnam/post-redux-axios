@@ -36,7 +36,7 @@ export const selectAllPosts = (state) => state.posts;
 
 export default postsSlide.reducer;
 
-export function getPosts() {
+export const getPosts = () => {
   return async (dispatch) => {
     api
       .get("/posts", {
@@ -52,9 +52,9 @@ export function getPosts() {
         dispatch(setError());
       });
   };
-}
+};
 
-export function postPosts(title, body, userId) {
+export const postPosts = (title, body, userId) => {
   return async (dispatch) => {
     api
       .post("/posts", {
@@ -70,4 +70,4 @@ export function postPosts(title, body, userId) {
         dispatch(setError());
       });
   };
-}
+};
