@@ -14,13 +14,13 @@ const postsSlide = createSlice({
         setLoading: (state) => {
             state.loading = true;
         },
+        setError: (state) => {
+            state.error = true;
+        },
         setPosts: (state, action) => {
             state.loading = false;
             state.error = false;
             state.posts = action.payload;
-        },
-        setError: (state) => {
-            state.error = true;
         },
         addPosts: {
             reducer(state, action) {
@@ -48,8 +48,12 @@ export default postsSlide.reducer;
 
 export function getPosts() {
     return async (dispatch) => {
-        api
-            .get("/posts?_start=0&_limit=5")
+        api.get("/posts", {
+            params: {
+                _start: 0,
+                _limit: 5,
+            },
+        })
             .then((response) => {
                 dispatch(setPosts(response.data));
             })
