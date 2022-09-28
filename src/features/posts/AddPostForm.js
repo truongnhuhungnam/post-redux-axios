@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postPost, selectPostById } from "./postsSlide";
+import { postPost, updatePost, selectPostById } from "./postsSlide";
 import { useEffect } from "react";
 import { getUsers, selectAllUsers } from "../users/usersSlice";
 
@@ -14,7 +14,6 @@ const AddPostForm = ({ updateId }) => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  
   const { loading, error, users } = useSelector(selectAllUsers);
   const post = useSelector((state) => selectPostById(state, updateId));
 
@@ -32,7 +31,15 @@ const AddPostForm = ({ updateId }) => {
 
   const onAddPostClick = () => {
     if (title && body) {
-      dispatch(postPost(title, body, userId));
+      dispatch(postPost(Number(userId), title, body));
+      setTitle("");
+      setBody("");
+    }
+  };
+
+  const onUpdatePostClick = () => {
+    if (title && body) {
+      dispatch(updatePost(Number(userId), updateId, title, body));
       setTitle("");
       setBody("");
     }
@@ -85,11 +92,11 @@ const AddPostForm = ({ updateId }) => {
       </label>
 
       <button
-        onClick={onAddPostClick}
+        onClick={updateId ? onUpdatePostClick : onAddPostClick}
         disabled={!canSave}
         className="btn-primary w-1/3 mt-4"
       >
-        Add Post
+        {updateId ? "Update Post" : "Add Post"}
       </button>
     </>
   );

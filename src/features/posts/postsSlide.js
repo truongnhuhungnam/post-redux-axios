@@ -30,12 +30,9 @@ const postsSlide = createSlice({
     editPost: (state, action) => {
       state.loading = false;
       state.error = false;
-      const { id, title, body } = action.payload;
-      const currentPost = state.posts.find((post) => post.id === id);
-      if (currentPost) {
-        currentPost.title = title;
-        currentPost.body = body;
-      }
+      const { id } = action.payload;
+      const prevPost = state.posts.filter((post) => post.id !== id);
+      state.posts = [...prevPost, action.payload];
     },
     removePost: (state, action) => {
       state.loading = false;
@@ -58,8 +55,8 @@ export default postsSlide.reducer;
 export const getPosts = () => {
   return async (dispatch) => {
     api
-      .get("/posts")
-      .then((response) => {
+    .get("/posts")
+    .then((response) => {
         dispatch(setPosts(response.data));
       })
       .catch((er) => {
@@ -68,7 +65,7 @@ export const getPosts = () => {
   };
 };
 
-export const postPost = (title, body, userId) => {
+export const postPost = (userId, title, body) => {
   return async (dispatch) => {
     api
       .post("/posts", {
@@ -97,14 +94,18 @@ export const deletePost = (id) => {
   };
 };
 
-export const updatePost = (id, title, body) => {
+export const updatePost = (userId, id, title, body) => {
   return async (dispatch) => {
     api
       .put(`/posts/${id}`, {
+        userId,
+        id,
         title,
         body,
       })
-      .then(dispatch(editPost(id, title, body)))
+      .then((response) => {
+        dispatch(editPost(response.data));
+      })
       .catch((er) => {
         dispatch(setError());
       });
