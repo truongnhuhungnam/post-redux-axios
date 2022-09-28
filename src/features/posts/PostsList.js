@@ -1,12 +1,13 @@
 import PostItem from "./PostItem";
 import AddPostForm from "./AddPostForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts, deletePost, selectAllPosts } from "./postsSlide";
 
 const Posts = () => {
   const dispatch = useDispatch();
   const { loading, error, posts } = useSelector(selectAllPosts);
+  const [updateId, setUpdateId] = useState();
 
   useEffect(() => {
     dispatch(getPosts());
@@ -14,6 +15,10 @@ const Posts = () => {
 
   const onDeletePost = (id) => {
     dispatch(deletePost(id));
+  };
+
+  const onUpdatePost = (id) => {
+    setUpdateId(id);
   };
 
   const renderPosts = () => {
@@ -29,6 +34,7 @@ const Posts = () => {
         body={post.body}
         userId={post.userId}
         onDeletePost={onDeletePost}
+        onUpdatePost={onUpdatePost}
       />
     ));
   };
@@ -42,7 +48,7 @@ const Posts = () => {
         <div className="mt-8 w-2/3 mx-auto">{renderPosts()}</div>
       </main>
       <div className="w-1/3 h-screen px-4">
-        <AddPostForm />
+        <AddPostForm updateId={updateId} />
       </div>
     </section>
   );

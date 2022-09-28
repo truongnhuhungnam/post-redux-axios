@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postPost } from "./postsSlide";
+import { postPost, selectPostById } from "./postsSlide";
 import { useEffect } from "react";
 import { getUsers, selectAllUsers } from "../users/usersSlice";
 
-const AddPostForm = () => {
+const AddPostForm = ({ updateId }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -14,7 +14,17 @@ const AddPostForm = () => {
     dispatch(getUsers());
   }, [dispatch]);
 
+  
   const { loading, error, users } = useSelector(selectAllUsers);
+  const post = useSelector((state) => selectPostById(state, updateId));
+
+  useEffect(() => {
+    if (post) {
+      setTitle(post.title);
+      setBody(post.body);
+      setUserId(post.userId);
+    }
+  }, [post]);
 
   const onTitleChange = (e) => setTitle(e.target.value);
   const onBodyChange = (e) => setBody(e.target.value);

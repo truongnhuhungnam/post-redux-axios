@@ -27,6 +27,16 @@ const postsSlide = createSlice({
       state.error = false;
       state.posts.push(action.payload);
     },
+    editPost: (state, action) => {
+      state.loading = false;
+      state.error = false;
+      const { id, title, body } = action.payload;
+      const currentPost = state.posts.find((post) => post.id === id);
+      if (currentPost) {
+        currentPost.title = title;
+        currentPost.body = body;
+      }
+    },
     removePost: (state, action) => {
       state.loading = false;
       state.error = false;
@@ -35,10 +45,13 @@ const postsSlide = createSlice({
   },
 });
 
-export const { setLoading, setPosts, setError, addPost, removePost } =
+export const { setLoading, setPosts, setError, addPost, editPost, removePost } =
   postsSlide.actions;
 
 export const selectAllPosts = (state) => state.posts;
+
+export const selectPostById = (state, postId) =>
+  state.posts.posts.find((post) => post.id === postId);
 
 export default postsSlide.reducer;
 
@@ -78,6 +91,20 @@ export const deletePost = (id) => {
     api
       .delete(`/posts/${id}`)
       .then(dispatch(removePost(id)))
+      .catch((er) => {
+        dispatch(setError());
+      });
+  };
+};
+
+export const updatePost = (id, title, body) => {
+  return async (dispatch) => {
+    api
+      .put(`/posts/${id}`, {
+        title,
+        body,
+      })
+      .then(dispatch(editPost(id, title, body)))
       .catch((er) => {
         dispatch(setError());
       });
